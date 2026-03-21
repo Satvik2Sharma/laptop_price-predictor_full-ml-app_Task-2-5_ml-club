@@ -1,7 +1,7 @@
 # **Name:** SATVIK SHARMA | **Club:** DCoders Squad - Machine Learning | **Date:** 21 March 2026
 
 **Connect with me:**
-* [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]([https://www.linkedin.com/in/your-profile-url](https://www.linkedin.com/in/satvik-sharma-577835372/?lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3BfBrR0oL1T6SyKHyV%2F4fCIg%3D%3D))
+* [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]([https://www.linkedin.com/in/your-profile-url](https://www.linkedin.com/in/satvik-sharma-577835372))
 * [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Satvik2Sharma)
 * [Email Me](mailto:satviksharma1706@gmail.com)
 # 💻 Laptop Price Prediction Web App
