@@ -42,6 +42,14 @@
             border-radius: 8px;
             padding: 20px;
         }
+        .footer-link {
+            color: #aaaaaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+}
+.footer-link:hover {
+    color: #ffc107; /* Lights up yellow on hover */
+}
     </style>
 </head>
 <body>
@@ -50,7 +58,7 @@
         <div class="col-lg-9">
             <div class="card p-4 p-md-5">
                 <h2 class="text-center mb-1 text-accent fw-bold">Laptop Price Predictor</h2>
-                <p class="text-center text-secondary mb-4">AI-Powered Hardware Valuation</p>
+                <p class="text-center text-secondary mb-4">An AI/ML Powered Product Made By <strong class="text-accent">SATVIK SHARMA</strong></p>
                 
                 <form action="/predict" method="POST">
                     <div class="row g-4">
@@ -206,5 +214,14 @@
         </div>
     </div>
 </div>
+<footer class="container mt-5 mb-4 text-center">
+    <hr class="border-secondary mb-4 opacity-50">
+    <p class="text-secondary mb-2">Designed & Developed by <strong class="text-accent">SATVIK SHARMA</strong></p>
+    <div>
+        <a href="https://github.com/Satvik2Sharma" target="_blank" rel="noopener noreferrer" class="footer-link mx-2">GitHub</a>
+        <span class="text-secondary">|</span>
+        <a href="https://www.linkedin.com/in/satvik-sharma-577835372/" target="_blank" rel="noopener noreferrer" class="footer-link mx-2">LinkedIn</a>
+    </div>
+</footer>
 </body>
 </html>
