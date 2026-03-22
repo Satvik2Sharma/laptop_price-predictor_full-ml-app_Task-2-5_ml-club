@@ -15,10 +15,10 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # 1. Create an array of zeros matching the number of features (45)
+        # 1. Create array of zeros
         query = np.zeros(len(columns))
 
-        # 2. Extract continuous features from the form
+        # 2. Extract continuous features
         ram = int(request.form.get('ram'))
         weight = float(request.form.get('weight'))
         touchscreen = int(request.form.get('touchscreen'))
@@ -27,30 +27,24 @@ def predict():
         ssd = int(request.form.get('ssd'))
         hdd = int(request.form.get('hdd'))
 
-        # --- NEW PPI CALCULATION LOGIC ---
-        # We catch the new user-friendly inputs from the dark theme HTML
+        # --- PPI CALCULATION ---
         inches = float(request.form.get('inches'))
         resolution = request.form.get('resolution')
-        
-        # Split "1920x1080" into X (1920) and Y (1080)
         x_res = int(resolution.split('x')[0])
         y_res = int(resolution.split('x')[1])
-        
-        # Calculate the PPI dynamically for the ML model
         ppi = ((x_res**2 + y_res**2)**0.5) / inches
-        # ---------------------------------
 
-        # Assign values to the correct slots in the array
+        # Assign values
         query[columns.index('Ram')] = ram
         query[columns.index('Weight')] = weight
         query[columns.index('Touchscreen')] = touchscreen
         query[columns.index('IPS')] = ips
-        query[columns.index('ppi')] = ppi # The model still gets the PPI it needs!
+        query[columns.index('ppi')] = ppi 
         query[columns.index('Cpu_speed')] = cpu_speed
         query[columns.index('SSD')] = ssd
         query[columns.index('HDD')] = hdd
 
-        # 3. Handle Categorical features via string matching
+        # 3. Handle Categorical features
         categorical_features = {
             'Company': request.form.get('company'),
             'TypeName': request.form.get('typename'),
@@ -60,7 +54,6 @@ def predict():
             'Screen_Type': request.form.get('screen_type')
         }
 
-        # Find the one-hot column name and set its index to 1
         for prefix, value in categorical_features.items():
             column_name = f"{prefix}_{value}"
             if column_name in columns:
@@ -69,13 +62,16 @@ def predict():
         # 4. Predict
         prediction = model.predict(query.reshape(1, -1))[0]
         
-        # Reverse the log transformation using np.exp
-        final_price = round(np.exp(prediction), 2)
+        # Calculate Currencies
+        price_eur = round(np.exp(prediction), 2)
+        price_usd = round(price_eur * 1.08, 2)  # Approx EUR to USD
+        price_inr = round(price_eur * 90.50, 2) # Approx EUR to INR
 
-        return render_template('index.html', result=f"Estimated Price: €{final_price}")
+        # Pass all three to the frontend
+        return render_template('index.html', eur=price_eur, usd=price_usd, inr=price_inr)
 
     except Exception as e:
-        return render_template('index.html', result=f"Error processing input: {str(e)}")
+        return render_template('index.html', error=f"Error processing input: {str(e)}")
 
 if __name__ == '__main__':
     app.run(debug=True)
