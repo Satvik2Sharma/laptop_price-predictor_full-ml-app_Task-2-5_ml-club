@@ -23,17 +23,29 @@ def predict():
         weight = float(request.form.get('weight'))
         touchscreen = int(request.form.get('touchscreen'))
         ips = int(request.form.get('ips'))
-        ppi = float(request.form.get('ppi'))
         cpu_speed = float(request.form.get('cpu_speed'))
         ssd = int(request.form.get('ssd'))
         hdd = int(request.form.get('hdd'))
 
-        # Assign continuous values to specific known indices in the array
+        # --- NEW PPI CALCULATION LOGIC ---
+        # We catch the new user-friendly inputs from the dark theme HTML
+        inches = float(request.form.get('inches'))
+        resolution = request.form.get('resolution')
+        
+        # Split "1920x1080" into X (1920) and Y (1080)
+        x_res = int(resolution.split('x')[0])
+        y_res = int(resolution.split('x')[1])
+        
+        # Calculate the PPI dynamically for the ML model
+        ppi = ((x_res**2 + y_res**2)**0.5) / inches
+        # ---------------------------------
+
+        # Assign values to the correct slots in the array
         query[columns.index('Ram')] = ram
         query[columns.index('Weight')] = weight
         query[columns.index('Touchscreen')] = touchscreen
         query[columns.index('IPS')] = ips
-        query[columns.index('ppi')] = ppi
+        query[columns.index('ppi')] = ppi # The model still gets the PPI it needs!
         query[columns.index('Cpu_speed')] = cpu_speed
         query[columns.index('SSD')] = ssd
         query[columns.index('HDD')] = hdd
@@ -55,7 +67,6 @@ def predict():
                 query[columns.index(column_name)] = 1
 
         # 4. Predict
-        # We reshape(1, -1) because sklearn expects a 2D array for a single prediction
         prediction = model.predict(query.reshape(1, -1))[0]
         
         # Reverse the log transformation using np.exp
