@@ -7,18 +7,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { 
-            background-color: #0f0f11; /* Deep modern black */
+            background-color: #0f0f11; 
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .card { 
             border-radius: 12px; 
-            background-color: #1a1a1d; /* Slightly lighter card */
+            background-color: #1a1a1d; 
             border: 1px solid #333;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
         .text-accent {
-            color: #ffc107 !important; /* Bold Yellow */
+            color: #ffc107 !important; 
         }
         .btn-custom {
             background-color: #ffc107;
@@ -56,124 +56,117 @@
                     <div class="row g-4">
                         <div class="col-md-4">
                             <label class="form-label text-light">RAM (GB)</label>
-                            <input type="number" class="form-control" name="ram" placeholder="e.g., 8" required>
+                            <input type="number" class="form-control" name="ram" placeholder="e.g., 8" value="{{ request.form.get('ram', '') }}" required>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label text-light">Weight (kg)</label>
-                            <input type="number" step="0.01" class="form-control" name="weight" placeholder="e.g., 1.5" required>
+                            <input type="number" step="0.01" class="form-control" name="weight" placeholder="e.g., 1.5" value="{{ request.form.get('weight', '') }}" required>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label text-light">CPU Speed (GHz)</label>
-                            <input type="number" step="0.01" class="form-control" name="cpu_speed" placeholder="e.g., 2.5" required>
+                            <input type="number" step="0.01" class="form-control" name="cpu_speed" placeholder="e.g., 2.5" value="{{ request.form.get('cpu_speed', '') }}" required>
                         </div>
                         
                         <div class="col-md-6">
                             <label class="form-label text-light">Screen Resolution</label>
                             <select class="form-select" name="resolution">
-                                <option value="1366x768">1366 x 768 (HD)</option>
-                                <option value="1600x900">1600 x 900 (HD+)</option>
-                                <option value="1920x1080" selected>1920 x 1080 (Full HD)</option>
-                                <option value="2560x1440">2560 x 1440 (2K / QHD)</option>
-                                <option value="2560x1600">2560 x 1600 (MacBook Retina)</option>
-                                <option value="2880x1800">2880 x 1800 (MacBook Pro)</option>
-                                <option value="3840x2160">3840 x 2160 (4K)</option>
+                                <option value="1366x768" {% if request.form.get('resolution') == '1366x768' %}selected{% endif %}>1366 x 768 (HD)</option>
+                                <option value="1600x900" {% if request.form.get('resolution') == '1600x900' %}selected{% endif %}>1600 x 900 (HD+)</option>
+                                <option value="1920x1080" {% if request.form.get('resolution') == '1920x1080' or not request.form.get('resolution') %}selected{% endif %}>1920 x 1080 (Full HD)</option>
+                                <option value="2560x1440" {% if request.form.get('resolution') == '2560x1440' %}selected{% endif %}>2560 x 1440 (2K / QHD)</option>
+                                <option value="2560x1600" {% if request.form.get('resolution') == '2560x1600' %}selected{% endif %}>2560 x 1600 (MacBook Retina)</option>
+                                <option value="2880x1800" {% if request.form.get('resolution') == '2880x1800' %}selected{% endif %}>2880 x 1800 (MacBook Pro)</option>
+                                <option value="3840x2160" {% if request.form.get('resolution') == '3840x2160' %}selected{% endif %}>3840 x 2160 (4K)</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label text-light">Screen Size (Inches)</label>
                             <select class="form-select" name="inches">
-                                <option value="11.6">11.6"</option>
-                                <option value="12.0">12.0"</option>
-                                <option value="13.3">13.3"</option>
-                                <option value="13.5">13.5"</option>
-                                <option value="14.0">14.0"</option>
-                                <option value="15.0">15.0"</option>
-                                <option value="15.6" selected>15.6" (Standard)</option>
-                                <option value="16.0">16.0"</option>
-                                <option value="17.3">17.3"</option>
-                                <option value="18.0">18.0"</option>
+                                <option value="11.6" {% if request.form.get('inches') == '11.6' %}selected{% endif %}>11.6"</option>
+                                <option value="13.3" {% if request.form.get('inches') == '13.3' %}selected{% endif %}>13.3"</option>
+                                <option value="14.0" {% if request.form.get('inches') == '14.0' %}selected{% endif %}>14.0"</option>
+                                <option value="15.6" {% if request.form.get('inches') == '15.6' or not request.form.get('inches') %}selected{% endif %}>15.6" (Standard)</option>
+                                <option value="17.3" {% if request.form.get('inches') == '17.3' %}selected{% endif %}>17.3"</option>
                             </select>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label text-light">SSD Storage (GB)</label>
-                            <input type="number" class="form-control" name="ssd" value="0" required>
+                            <input type="number" class="form-control" name="ssd" value="{{ request.form.get('ssd', '0') }}" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label text-light">HDD Storage (GB)</label>
-                            <input type="number" class="form-control" name="hdd" value="0" required>
+                            <input type="number" class="form-control" name="hdd" value="{{ request.form.get('hdd', '0') }}" required>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label text-light">Brand</label>
                             <select class="form-select" name="company">
-                                <option value="Apple">Apple</option>
-                                <option value="Asus">Asus</option>
-                                <option value="Dell">Dell</option>
-                                <option value="HP">HP</option>
-                                <option value="Lenovo">Lenovo</option>
-                                <option value="MSI">MSI</option>
-                                <option value="Toshiba">Toshiba</option>
-                                <option value="Other">Other...</option>
+                                <option value="Apple" {% if request.form.get('company') == 'Apple' %}selected{% endif %}>Apple</option>
+                                <option value="Asus" {% if request.form.get('company') == 'Asus' %}selected{% endif %}>Asus</option>
+                                <option value="Dell" {% if request.form.get('company') == 'Dell' %}selected{% endif %}>Dell</option>
+                                <option value="HP" {% if request.form.get('company') == 'HP' %}selected{% endif %}>HP</option>
+                                <option value="Lenovo" {% if request.form.get('company') == 'Lenovo' %}selected{% endif %}>Lenovo</option>
+                                <option value="MSI" {% if request.form.get('company') == 'MSI' %}selected{% endif %}>MSI</option>
+                                <option value="Other" {% if request.form.get('company') == 'Other' %}selected{% endif %}>Other...</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label text-light">Laptop Type</label>
                             <select class="form-select" name="typename">
-                                <option value="Gaming">Gaming</option>
-                                <option value="Notebook">Notebook</option>
-                                <option value="Ultrabook">Ultrabook</option>
-                                <option value="Workstation">Workstation</option>
-                                <option value="Netbook">Netbook</option>
+                                <option value="Gaming" {% if request.form.get('typename') == 'Gaming' %}selected{% endif %}>Gaming</option>
+                                <option value="Notebook" {% if request.form.get('typename') == 'Notebook' or not request.form.get('typename') %}selected{% endif %}>Notebook</option>
+                                <option value="Ultrabook" {% if request.form.get('typename') == 'Ultrabook' %}selected{% endif %}>Ultrabook</option>
+                                <option value="Workstation" {% if request.form.get('typename') == 'Workstation' %}selected{% endif %}>Workstation</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label text-light">Operating System</label>
                             <select class="form-select" name="opsys">
-                                <option value="Windows">Windows</option>
-                                <option value="Mac">Mac</option>
-                                <option value="Other">Other / Linux / No OS</option>
+                                <option value="Windows" {% if request.form.get('opsys') == 'Windows' or not request.form.get('opsys') %}selected{% endif %}>Windows</option>
+                                <option value="Mac" {% if request.form.get('opsys') == 'Mac' %}selected{% endif %}>Mac</option>
+                                <option value="Other" {% if request.form.get('opsys') == 'Other' %}selected{% endif %}>Other / Linux / No OS</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label text-light">CPU Brand</label>
                             <select class="form-select" name="cpu_brand">
-                                <option value="i3">Intel Core i3</option>
-                                <option value="i5">Intel Core i5</option>
-                                <option value="i7">Intel Core i7</option>
-                                <option value="Other Intel">Other Intel</option>
-                                <option value="Other">AMD / Other</option>
+                                <option value="i3" {% if request.form.get('cpu_brand') == 'i3' %}selected{% endif %}>Intel Core i3</option>
+                                <option value="i5" {% if request.form.get('cpu_brand') == 'i5' or not request.form.get('cpu_brand') %}selected{% endif %}>Intel Core i5</option>
+                                <option value="i7" {% if request.form.get('cpu_brand') == 'i7' %}selected{% endif %}>Intel Core i7</option>
+                                <option value="Other Intel" {% if request.form.get('cpu_brand') == 'Other Intel' %}selected{% endif %}>Other Intel</option>
+                                <option value="Other" {% if request.form.get('cpu_brand') == 'Other' %}selected{% endif %}>AMD / Other</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label text-light">GPU Brand</label>
                             <select class="form-select" name="gpu_brand">
-                                <option value="Intel">Intel</option>
-                                <option value="Nvidia">Nvidia</option>
-                                <option value="ARM">ARM</option>
+                                <option value="Intel" {% if request.form.get('gpu_brand') == 'Intel' or not request.form.get('gpu_brand') %}selected{% endif %}>Intel</option>
+                                <option value="Nvidia" {% if request.form.get('gpu_brand') == 'Nvidia' %}selected{% endif %}>Nvidia</option>
+                                <option value="ARM" {% if request.form.get('gpu_brand') == 'ARM' %}selected{% endif %}>ARM</option>
                             </select>
                         </div>
                         
                         <div class="col-md-4">
                             <label class="form-label text-light">Screen Panel</label>
                             <select class="form-select" name="screen_type">
-                                <option value="Full HD">Full HD</option>
-                                <option value="HD">HD</option>
-                                <option value="Other">Other / 4K</option>
+                                <option value="Full HD" {% if request.form.get('screen_type') == 'Full HD' or not request.form.get('screen_type') %}selected{% endif %}>Full HD</option>
+                                <option value="HD" {% if request.form.get('screen_type') == 'HD' %}selected{% endif %}>HD</option>
+                                <option value="Other" {% if request.form.get('screen_type') == 'Other' %}selected{% endif %}>Other / 4K</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label text-light">Touchscreen</label>
                             <select class="form-select" name="touchscreen">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
+                                <option value="1" {% if request.form.get('touchscreen') == '1' %}selected{% endif %}>Yes</option>
+                                <option value="0" {% if request.form.get('touchscreen') == '0' or not request.form.get('touchscreen') %}selected{% endif %}>No</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label text-light">IPS Display</label>
                             <select class="form-select" name="ips">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
+                                <option value="1" {% if request.form.get('ips') == '1' %}selected{% endif %}>Yes</option>
+                                <option value="0" {% if request.form.get('ips') == '0' or not request.form.get('ips') %}selected{% endif %}>No</option>
                             </select>
                         </div>
                     </div>
